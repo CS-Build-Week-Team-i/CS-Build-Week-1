@@ -5,13 +5,45 @@ from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 import uuid
 
+class Map(models.Model):
+    map = models.ArrayField(
+        ArrayField(
+            models.CharField(max_length=10, blank=True),
+            size=14,
+        ),
+        size=14,
+    )
+
 class Room(models.Model):
+    # id = models.IntegerField(primary_key=True, default=0)
     title = models.CharField(max_length=50, default="DEFAULT TITLE")
     description = models.CharField(max_length=500, default="DEFAULT DESCRIPTION")
     n_to = models.IntegerField(default=0)
     s_to = models.IntegerField(default=0)
     e_to = models.IntegerField(default=0)
     w_to = models.IntegerField(default=0)
+    x = models.IntegerField(default=0)
+    y = models.IntegerField(default=0)
+
+    def connectRoomByID(self, destinationRoomID, direction):
+        try:
+            destinationRoom = Room.objects.get(id=destinationRoomID)
+        except Room.DoesNotExist:
+            print("That room does not exist")
+        else:
+            if direction == "n":
+                self.n_to = destinationRoomID
+            elif direction == "s":
+                self.s_to = destinationRoomID
+            elif direction == "e":
+                self.e_to = destinationRoomID
+            elif direction == "w":
+                self.w_to = destinationRoomID
+            else:
+                print("Invalid direction")
+                return
+            self.save()
+
     def connectRooms(self, destinationRoom, direction):
         destinationRoomID = destinationRoom.id
         try:
@@ -35,7 +67,6 @@ class Room(models.Model):
         return [p.user.username for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
     def playerUUIDs(self, currentPlayerID):
         return [p.uuid for p in Player.objects.filter(currentRoom=self.id) if p.id != int(currentPlayerID)]
-
 
 class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

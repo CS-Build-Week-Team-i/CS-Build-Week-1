@@ -22,6 +22,14 @@ def initialize(request):
     players = room.playerNames(player_id)
     return JsonResponse({'uuid': uuid, 'name':player.user.username, 'title':room.title, 'description':room.description, 'players':players}, safe=True)
 
+@csrf_exempt
+@api_view(["GET"])
+def room(request):
+    rooms = Room.objects.all()
+    if request.user:
+        return JsonResponse(rooms, safe=False, status=200)
+    else:
+        return JsonResponse({'error':"Sorry you need to be a registered user to play"}, safe=True, status=403)
 
 # @csrf_exempt
 @api_view(["POST"])

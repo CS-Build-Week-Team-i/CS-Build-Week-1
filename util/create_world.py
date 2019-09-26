@@ -4,10 +4,9 @@ from adventure.models import Player, Room
 
 Room.objects.all().delete()
 
-r_outside = Room(title="Outside Cave Entrance",
-               description="North of you, the cave mount beckons")
+r_outside = Room(title="Mine Emergency Exit", description="A lone wooden sign reads: Mine has been permenrlty closed, DO NOT ENTER")
 
-r_foyer = Room(title="Foyer", description="""Dim light filters in from the south. Dusty
+r_foyer = Room(title="Cavern", description="""Dim light filters in from the south. Dusty
 passages run north and east.""")
 
 r_overlook = Room(title="Grand Overlook", description="""A steep cliff appears before you, falling

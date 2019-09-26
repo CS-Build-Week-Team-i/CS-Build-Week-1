@@ -42,9 +42,6 @@ class World:
         self.width = 0
         self.height = 0
     def generate_rooms(self, size_x, size_y, num_rooms):
-        '''
-        Fill up the grid, bottom to top, in a zig-zag pattern
-        '''
 
         # Initialize the grid
         self.grid = [None] * size_y
@@ -53,31 +50,65 @@ class World:
         for i in range( len(self.grid) ):
             self.grid[i] = [None] * size_x
 
-        # Start from lower-left corner (0,0)
-        x = -1 # (this will become 0 on the first step)
+        # Start from the middle of the map
+        x = int(width / 2)
         y = 0
         room_count = 0
 
+        #previous_room = None        
         # Start generating rooms to the east
-        direction = 1  # 1: east, -1: west
-
+        # direction = 1  # 1: east, -1: west
 
         # While there are rooms to be created...
         previous_room = None
         while room_count < num_rooms:
 
-            # Calculate the direction of the room to be created
-            if direction > 0 and x < size_x - 1:
-                room_direction = "e"
-                x += 1
-            elif direction < 0 and x > 0:
-                room_direction = "w"
-                x -= 1
-            else:
-                # If we hit a wall, turn north and reverse direction
+            # Rooms will always have atleast one exit so we need to decide 
+            # if we'll add 1, 2, or 3 more exits
+
+            # Randomly select the new directions
+
+            # Based on the number of exits generate new rooms,
+            # if num_rooms hasn't been reached
+
+
+            if room_count == 1:
                 room_direction = "n"
                 y += 1
-                direction *= -1
+            else:
+
+                # Rooms will always have atleast one exit so we need to decide 
+                # if we'll add 1, 2, or 3 more exits
+
+                # Randomly select the new directions
+
+                # Based on the number of exits generate new rooms,
+                # if num_rooms hasn't been reached
+
+                # If the row is 1 then the generator can only go
+                # north, east, and west
+                if y == 1:
+                    #Logic to choose a direction to exit
+                # Else generator can go any direction
+                else:
+                    #Logic to choose a direction to exit
+
+                # Once room generation has been taken care of 
+                # select one of then new rooms to be the next node
+                # to gnerate from, thus giving us dead ends
+
+            # Calculate the direction of the room to be created
+            # if direction > 0 and x < size_x - 1:
+            #     room_direction = "e"
+            #     x += 1
+            # elif direction < 0 and x > 0:
+            #     room_direction = "w"
+            #     x -= 1
+            # else:
+            #     # If we hit a wall, turn north and reverse direction
+            #     room_direction = "n"
+            #     y += 1
+            #     direction *= -1
 
             # Create a room in the given direction
             room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
@@ -93,6 +124,12 @@ class World:
             # Update iteration variables
             previous_room = room
             room_count += 1
+    
+    # randomly decides the number of conections
+    # def num_of_conections():
+
+    # Make conections between room
+    # def make_conections():
 
 
 
@@ -152,9 +189,9 @@ class World:
 
 
 w = World()
-num_rooms = 44
-width = 8
-height = 7
+num_rooms = 2
+width = 25
+height = 25
 w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
 

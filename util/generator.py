@@ -104,14 +104,14 @@ class World:
                 return 
             # first execution
             elif self.room_count == 0:
-                room0 = Room(0, "A Generic Room", "This is a generic room.", mid_x, mid_y)
+                room0 = Room(1, "Room of Begining", "This is a generic room.", mid_x, mid_y)
                 self.room_count += 1
                 self.grid[mid_y][mid_x] = room0 # sets new room to the middle of the map
                 propagateHelper(room0,x,y)
             else:
                 coinFlip = random.randrange(0, 2)
                 if coinFlip == 1:
-                    room = Room(self.room_count, "A Generic Room", "This is a generic room.", x, y)
+                    room = Room(self.room_count+1, "A Generic Room", "This is a generic room.", x, y)
                     self.grid[y][x] = room
                     self.room_count += 1
                     previous_room.connect_rooms(room, room_direction)

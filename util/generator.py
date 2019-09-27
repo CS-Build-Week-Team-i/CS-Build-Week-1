@@ -44,25 +44,30 @@ class World:
         self.room_count = 0
 
     def new_print_rooms(self):
+
         # top of container
         # for room in reverse_grid[0]:
         displayFormat = '-x,y-'
         print('*'*(len(self.grid[0])*len(displayFormat)+4))
+
         for row in self.grid:
             print('||', end='')
             for room in row:
                 print('  |  ' if room and room.n_to else '     ', end='')
             print('||')
+
             print('||', end='')
             for room in row:
                 print('-'if room and room.w_to else ' ', end='')
                 print(f'{room.id}'.zfill(3) if room else '...', end='')
                 print('-'if room and room.e_to else ' ', end='')
             print('||')
+
             print('||', end='')
             for room in row:
                 print('  |  ' if room and room.s_to else '     ', end='')
             print('||')
+
         # bottom of container
         print('*'*(len(self.grid[0])*len(displayFormat)+4))
 
